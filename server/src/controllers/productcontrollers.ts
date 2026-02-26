@@ -11,7 +11,7 @@ export const getProdutos = async (req: Request, res: Response) => {
   }
 };
 
-export const addProdutos = async (req: Request, res: response) => { 
+export const addProdutos = async (req: Request, res: Response) => { 
   try {
     console.log("BODY COMPLETO: ", req.body);
     const { nome, preco } = req.body;
