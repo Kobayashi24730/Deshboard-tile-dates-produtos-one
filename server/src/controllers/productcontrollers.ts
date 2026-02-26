@@ -1,7 +1,8 @@
 import { db } from "../database";
 import { produtos } from "../database/schema";
+import { Request, Response } from "express";
 
-export const getProdutos = async (req, res) => {
+export const getProdutos = async (req: Request, res: Response) => {
   try {
     const all = await db.select().from(produtos);
     return res.json(all);
@@ -10,7 +11,7 @@ export const getProdutos = async (req, res) => {
   }
 };
 
-export const addProdutos = async (req, res) => { 
+export const addProdutos = async (req: Request, res: response) => { 
   try {
     console.log("BODY COMPLETO: ", req.body);
     const { nome, preco } = req.body;
