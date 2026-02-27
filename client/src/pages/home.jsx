@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function home() {
+function Home() {
   const [produtos, setProdutos] = useState([]);
   const [erro, setErro] = useState(null);
   const [carregando, setCarregando] = useState(true);
@@ -8,7 +8,7 @@ function home() {
   useEffect(() => {
     async function buscarProdutos() {
       try {
-        const response = await fetch("/api/produtos");
+        const response = await fetch("https://deshboard-tile-dates-produtos-one.onrender.com/api/produtos");
 
         if (!response.ok) {
           throw new Error("Erro ao buscar produtos");
@@ -71,4 +71,4 @@ function home() {
   );
 }
 
-export default home;
+export default Home;

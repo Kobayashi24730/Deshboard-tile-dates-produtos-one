@@ -6,8 +6,9 @@ export const getProdutos = async (req: Request, res: Response) => {
   try {
     const all = await db.select().from(produtos);
     return res.json(all);
-  } catch (err) {
-    return res.status(500).json({ erro: "Erro ao buscar produtos" });
+  } catch (err: any) {
+    console.error("ERRO REAL:", err);
+    return res.status(500).json({ erro: err.message });
   }
 };
 
