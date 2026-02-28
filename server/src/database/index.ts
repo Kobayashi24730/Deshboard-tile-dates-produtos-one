@@ -17,4 +17,4 @@ pool
   .then((res) => console.log("DB connected:", res.rows))
   .catch((err: Error) => console.error("DB connection error:", err));
 
-console.log("LOG URL" process.env.DATA_URL);
+console.log("LOG URL", process.env.DATA_URL);
