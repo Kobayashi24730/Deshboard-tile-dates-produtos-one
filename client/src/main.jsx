@@ -1,9 +1,14 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import MenuLaterral from "./components/MenuLaterral"
 import Home from "./pages/home";
+import "./styles/global.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Home />
+    <MenuLaterral />
+    <main className="conteudo">
+      <Home />
+    </main>
   </React.StrictMode>
 );
