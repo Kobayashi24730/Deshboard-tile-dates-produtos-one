@@ -4,8 +4,27 @@ import { Request, Response } from "express";
 
 export const getProdutos = async (req: Request, res: Response) => {
   try {
-    const all = await db.select().from(produtos);
-    return res.json(all);
+    const data = await db.select().from(produtos);
+    const produtosFormatados = data.map((produto) => {
+      const variacao = ((produto.preco - produto.vendas_ano_anterior) / produto.vendas_ano_anterior) * 100;
+
+      return {
+        id: produto.id
+        nome: produto.nome,
+        preco: produto.preco,
+        vendas: produto.vendas,
+        demanda: produto.demanda,
+        comparacao_atual: {
+          ano_anterior: produto.vendas_ano_anterior,
+          variacao_percentual: Number(variacao.toFixed());
+        }
+      };
+    });
+
+    res.json({
+      "produtos": produtosFormatados
+    });
+
   } catch (err: any) {
     console.error("ERRO REAL:", err);
     return res.status(500).json({ erro: err.message });
