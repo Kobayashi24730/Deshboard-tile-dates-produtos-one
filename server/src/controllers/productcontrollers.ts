@@ -6,7 +6,7 @@ export const getProdutos = async (req: Request, res: Response) => {
   try {
     const data = await db.select().from(produtos);
     const produtosFormatados = data.map((produto) => {
-      const variacao = ((produto.vendas - produto.vendas_ano_anterior) / produto.vendas_ano_anterior) * 100;
+      const variacao = produto.vendas_ano_anterior === 0 ? 0 : ((produto.vendas - produto.vendas_ano_anterior) / produto.vendas_ano_anterior) * 100;
 
       return {
         id: produto.id,
@@ -34,11 +34,11 @@ export const getProdutos = async (req: Request, res: Response) => {
 export const addProdutos = async (req: Request, res: Response) => { 
   try {
     console.log("BODY COMPLETO: ", req.body);
-    const { nome, preco, vendas, demanda, vendas_ano_anterior} = req.body;
+    const { nome, preco, vendas, demanda, vendas_ano_anterior } = req.body;
     
-    console.log("Recebido no Back-end:", nome, preco);
+    console.log("Recebido no Back-end:", nome, preco, vendas, demanda, vendas_ano_anterior);
 
-    if (nome == null || preco == null || vendas == null || demanda == null || vendas_ano_anterior = null) {
+    if (nome == null || preco == null || vendas == null || demanda == null || vendas_ano_anterior == null) {
       return res.status(400).json({ erro: "Nome é obrigatório!!" });
     }
 
