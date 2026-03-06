@@ -16,7 +16,7 @@ export const getProdutos = async (req: Request, res: Response) => {
         demanda: produto.demanda,
         comparacao_atual: {
           ano_anterior: produto.vendas_ano_anterior,
-          variacao_percentual: Number(variacao.toFixed());
+          variacao_percentual: Number(variacao.toFixed())
         }
       };
     });
