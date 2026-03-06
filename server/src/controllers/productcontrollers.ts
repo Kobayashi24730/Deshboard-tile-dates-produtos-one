@@ -6,7 +6,7 @@ export const getProdutos = async (req: Request, res: Response) => {
   try {
     const data = await db.select().from(produtos);
     const produtosFormatados = data.map((produto) => {
-      const variacao = ((produto.preco - produto.vendas_ano_anterior) / produto.vendas_ano_anterior) * 100;
+      const variacao = ((produto.vendas - produto.vendas_ano_anterior) / produto.vendas_ano_anterior) * 100;
 
       return {
         id: produto.id,
