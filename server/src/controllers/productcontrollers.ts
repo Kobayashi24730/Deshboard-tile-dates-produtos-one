@@ -9,7 +9,7 @@ export const getProdutos = async (req: Request, res: Response) => {
       const variacao = ((produto.preco - produto.vendas_ano_anterior) / produto.vendas_ano_anterior) * 100;
 
       return {
-        id: produto.id
+        id: produto.id,
         nome: produto.nome,
         preco: produto.preco,
         vendas: produto.vendas,
