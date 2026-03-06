@@ -34,15 +34,15 @@ export const getProdutos = async (req: Request, res: Response) => {
 export const addProdutos = async (req: Request, res: Response) => { 
   try {
     console.log("BODY COMPLETO: ", req.body);
-    const { nome, preco } = req.body;
+    const { nome, preco, vendas, demanda, vendas_ano_anterior} = req.body;
     
     console.log("Recebido no Back-end:", nome, preco);
 
-    if (!nome) {
+    if (nome == null || preco == null || vendas == null || demanda == null || vendas_ano_anterior = null) {
       return res.status(400).json({ erro: "Nome é obrigatório!!" });
     }
 
-    const all = await db.insert(produtos).values({ nome, preco }).returning();
+    const all = await db.insert(produtos).values({ nome, preco, vendas, demanda, vendas_ano_anterior }).returning();
 
     return res.status(201).json({
       sucesso: true,
