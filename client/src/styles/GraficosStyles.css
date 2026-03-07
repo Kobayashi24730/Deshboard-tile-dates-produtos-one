@@ -1,0 +1,110 @@
+/* =========================
+   GRID DOS GRÁFICOS
+========================= */
+
+.graficos-grid{
+  width:100%;
+
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+
+  gap:25px;
+
+  padding:20px;
+}
+
+
+/* =========================
+   CARD DO GRÁFICO
+========================= */
+
+.div-graficos-one{
+
+  background:#ffffff;
+
+  border-radius:16px;
+
+  padding:20px;
+
+  box-shadow:0 10px 25px rgba(0,0,0,0.08);
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:all .25s ease;
+}
+
+
+/* animação ao passar mouse */
+
+.div-graficos-one:hover{
+
+  transform:translateY(-6px);
+
+  box-shadow:0 18px 35px rgba(0,0,0,0.15);
+
+}
+
+
+/* =========================
+   CONTAINER DO GRÁFICO
+========================= */
+
+.chart-container{
+  width:100%;
+  height:260px;
+}
+
+
+/* =========================
+   TABLETS
+========================= */
+
+@media (max-width:1024px){
+
+  .graficos-grid{
+    grid-template-columns: repeat(2,1fr);
+    gap:20px;
+  }
+
+  .chart-container{
+    height:220px;
+  }
+
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width:768px){
+
+  .graficos-grid{
+    grid-template-columns:1fr;
+    padding:15px;
+  }
+
+  .div-graficos-one{
+    padding:16px;
+  }
+
+  .chart-container{
+    height:200px;
+  }
+
+}
+
+
+/* =========================
+   MOBILE PEQUENO
+========================= */
+
+@media (max-width:420px){
+
+  .chart-container{
+    height:180px;
+  }
+
+}

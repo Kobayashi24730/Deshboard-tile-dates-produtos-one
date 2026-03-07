@@ -18,7 +18,7 @@ export default function TabelaProdutosOne() {
 
         const data = response.json()
 
-        setProdutos(data);
+        setProdutos(data.produtos);
       } catch (err) {
         console.log("Erro ao busca URL ", err.message);
         setMsgErro("Nao foi posivel carregar produtos");
@@ -40,13 +40,14 @@ export default function TabelaProdutosOne() {
         {loading && <p className="carregando" >Carregando...</p>}
         {msgErro && <p className="error" >{msgErro}</p>}
         {!loading && !msgErro && <p className="semProdutos" >Nao a produtos cadastrados...</p>}
-        {produtos.map((produto)
+        {produtos.map((protuto) => {
           <ul className="ListaProdutos" key={produtos.id}>
             <li>{protuto.name}</li>
-            <li>{produtos.preco}
+            <li>{produtos.preco}</li>
           </ul>
-        )}
+        })};
       </div>
     </div>
+
   );
 }

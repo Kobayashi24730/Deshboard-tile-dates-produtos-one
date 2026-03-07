@@ -1,10 +1,12 @@
 import { useState,useEffect } from "react";
 import LinearChartComponents from "./charts/LineChartComponents";
 import { ChartData } from "../types/chartTypes";
+import "../styles/GraficosStyles.css";
 
 export default function Gaficos(){
   const [data, setData] = useState<ChartData[]>([]);
-  const [erro, setErro] = useState(null);
+  const [erro, setErro] = useState<string | null> (null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function buscadedados(){
@@ -14,21 +16,29 @@ export default function Gaficos(){
           throw new Error("Erro ao busca data na API!!");
         }
 
-        const data = await response.json();
-        const DadosFormatados = data.map((produto: any) => ({
+        const result = await response.json();
+        const DadosFormatados = result.produtos.map((produto: any) => ({
           nome: produto.nome,
           value: produto.preco
         }));
         setData(DadosFormatados);
       } catch (err) {
-        console.log("Erro ao busca dados do gafico: ", err.message);
-        setErro("Erro ao busca dados do grafico.");
+        if (err instanceof Error) {
+          console.log("Erro ao busca dados do gafico: ", err.message);
+        }
+        setErro("Erro ao busca data.");
+      } finally {
+        setLoading(false);
       }
     }
+
+    buscadedados();
   }, []);
 
   return(
-    <div>
+    <div className="div-graficos-one">
+      {loading && <div className="loading-grafico-one" >Carregando...</div>}
+      {erro && <div className="erro-grafico-one">{erro}</div>}
       <LinearChartComponents data={data} />
     </div>
   );

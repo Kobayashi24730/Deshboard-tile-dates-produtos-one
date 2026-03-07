@@ -19,7 +19,7 @@ export default function Home() {
 
         const data = await response.json();
         
-        setProdutos(data);
+        setProdutos(data.produtos);
       } catch (err) {
         console.error("Erro no fetch:", err);
         setErro("Não foi possível carregar os produtos.");
