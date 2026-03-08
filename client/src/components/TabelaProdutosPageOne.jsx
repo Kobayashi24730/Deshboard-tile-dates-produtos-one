@@ -1,5 +1,5 @@
 import { throws } from "node:assert";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import "../styles/TabelaProdutosPageOneStyles.css";
 
 export default function TabelaProdutosOne() {
@@ -8,7 +8,7 @@ export default function TabelaProdutosOne() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function buscaprodutos(){
+    async function buscaprodutos() {
       try {
         const response = await fetch("https://deshboard-tile-dates-produtos-one.onrender.com/api/produtos");
 
