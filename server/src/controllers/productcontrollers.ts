@@ -11,9 +11,14 @@ export const getProdutos = async (req: Request, res: Response) => {
       return {
         id: produto.id,
         nome: produto.nome,
+        category: produto.category,
         preco: produto.preco,
         vendas: produto.vendas,
         demanda: produto.demanda,
+        quantity: produto.quantity,
+        sku: produto.sku,
+        description: produto.description,
+        image: produto.image,
         comparacao_atual: {
           ano_anterior: produto.vendas_ano_anterior,
           variacao_percentual: Number(variacao.toFixed())
