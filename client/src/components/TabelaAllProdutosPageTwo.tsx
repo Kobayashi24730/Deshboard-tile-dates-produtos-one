@@ -27,7 +27,7 @@ export default function TabellaAllPages() {
         }
 
         const response = await result.json();
-        setData(response);
+        setData(response.produtos);
 
       } catch (err: any) {
         setError(err.message);
@@ -39,9 +39,9 @@ export default function TabellaAllPages() {
     buscadados();
   }, []);
 
-  const produtosFiltrados = busca ? data.filter((produto) => produto.nome.toLowerCase().includes(busca.toLocaleLowerCase()) || produto.sku.toLowerCase().includes(busca.toLocaleLowerCase())) : data;
+  const produtosFiltrados = busca ? data.filter((produto) => produto.nome.toLowerCase().includes(busca.toLocaleLowerCase()) || String(produto.sku).toLowerCase().includes(busca.toLocaleLowerCase())) : data;
 
-  const getStatus = (quantity: number) => {
+  const getStatus = (quantity: number | undefined) => {
     if (quantity === 0) return { texto: "Esgotado", classe: "esgotado" };
     if (quantity <= 5) return { texto: "Baixo", classe: "Baixo" };
     return { texto: "Em estoque", classe: "estoque" };
