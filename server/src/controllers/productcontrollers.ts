@@ -114,7 +114,7 @@ export const editarProduto = async (req: Request, res: Response) => {
     console.log("Erro ao editar produto: ", err)
     return res.status(500).json({
       sucesso: false,
-      mensagem: "Erro ao editar produtos."
+      mensagem: "Erro ao editar produtos.",
       data: err.message
     });
   }
@@ -191,7 +191,7 @@ export const excluirClient = async (req: Request, res: Response) => {
       });
     }
 
-    const del = await db.delete(clients).where(eq(clients.nome, clients.email);
+    const del = await db.delete(clients).where(eq(clients.nome, clients.email));
 
     return res.status.json({
       sucesso: true,
