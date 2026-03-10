@@ -1,3 +1,5 @@
+import { primaryKey } from "drizzle-orm/gel-core";
+import { varchar } from "drizzle-orm/mysql-core";
 import { pgTable, serial, text, integer, timestamp } from "drizzle-orm/pg-core";
 
 export const produtos = pgTable("produtos", {
@@ -13,4 +15,17 @@ export const produtos = pgTable("produtos", {
   vendas: integer("vendas").notNull(),
   demanda: integer("demanda").notNull(),
   vendas_ano_anterior: integer("vendas_ano_anterior").notNull()
+});
+
+export const clients = pgTable("client", {
+  id: serial("id").primaryKey(),
+  nome: text("nome").notNull(),
+  emial: varchar("email").notNull(),
+  senha: varchar("senha").notNull(),
+  cargo: text("cargo").notNull(),
+});
+
+export const administracao = pgTable("administracao", {
+  id: serial("id").primaryKey(),
+  atualizacao: text("atualizacao").notNull(),
 });

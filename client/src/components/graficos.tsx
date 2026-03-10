@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
 import LinearChartComponents from "./charts/LineChartComponents";
+import CategoryChart from "./charts/CategoryChartComponents";
+import TopBarChart from "./charts/TopBarChartComponents";
 import { ChartData } from "../types/chartTypes";
 import "../styles/GraficosStyles.css";
 
 
-export default function Gaficos() {
-  const [data, setData] = useState<ChartData[]>([]);
+export default function Graficos() {
+  const [dataLine, setDataLine] = useState<ChartData[]>([]);
+  const [dataCategory, setDataCategory] = useState<any[]>([]);
+  const [databar, setDataBar] = useState<any[]>([]);
   const [erro, setErro] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -17,12 +21,23 @@ export default function Gaficos() {
           throw new Error("Erro ao busca data na API!!");
         }
 
-        const result = await response.json();
-        const DadosFormatados = result.produtos.map((produto: any) => ({
+        const result: { produtos: any[] } = await response.json();
+        const DadosFormatadosLine = result.produtos.map((produto) => ({
           nome: produto.nome,
           value: produto.preco
         }));
-        setData(DadosFormatados);
+        const DadosFormatadosCategory = result.produtos.map((produto) => ({
+          category: produto.category,
+          vendas: produto.vendas
+        }));
+        const DadosFormatadosBar = result.produtos.map((produto) => ({
+          nome: produto.nome,
+          vendas: produto.vendas
+        }))
+        setDataLine(DadosFormatadosLine);
+        setDataCategory(DadosFormatadosCategory);
+        setDataBar(DadosFormatadosBar);
+
       } catch (err) {
         if (err instanceof Error) {
           console.log("Erro ao busca dados do gafico: ", err.message);
@@ -37,10 +52,23 @@ export default function Gaficos() {
   }, []);
 
   return (
-    <div className="div-graficos-one">
+    <div className="graficos-grid">
       {loading && <div className="loading-grafico-one" >Carregando...</div>}
       {erro && <div className="erro-grafico-one">{erro}</div>}
-      <LinearChartComponents data={data} />
+
+      {!loading && !erro && (
+        <div className="charts_container">
+          <div className="chart-box">
+            <LinearChartComponents data={dataLine} />
+          </div>
+          <div className="chart-box">
+            <CategoryChart data={dataCategory} />
+          </div>
+          <div className="chart-box">
+            <TopBarChart data={databar} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

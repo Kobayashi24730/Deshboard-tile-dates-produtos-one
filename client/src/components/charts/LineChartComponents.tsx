@@ -11,55 +11,22 @@ import {
 import { ChartData } from "../../types/chartTypes.ts";
 import "../../styles/GraficosStyles.css";
 
-interface Props{
+interface Props {
   data: ChartData[];
 }
 
-export default function LinearChartComponents({data}: Props){
-  return(
-    <div className="graficos-grid">
-      <div className="div-graficos-one">
-        <div className="chart-container">
-          <ResponsiveContainer  width="100%" height="100%">
-            <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="nome"/>
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="value" stroke="#8884d8"/>
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      <div className="div-graficos-one">
-        <div className="chart-container">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="nome"/>
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="value" stroke="#8884d8"/>
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
-      <div className="div-graficos-one">
-        <div className="chart-container">
-          <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="nome"/>
-              <YAxis />
-              <Tooltip />
-              <Line type="monotone" dataKey="value" stroke="#8884d8"/>
-            </LineChart>
-          </ResponsiveContainer>
-        </div>
-      </div>
-
+export default function SalesChart({ data }: Props) {
+  return (
+    <div className="chart-container">
+      <ResponsiveContainer width="100%" height="100%">
+        <LineChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis dataKey="nome" />
+          <YAxis />
+          <Tooltip />
+          <Line type="monotone" dataKey="value" stroke="#3b82f6" />
+        </LineChart>
+      </ResponsiveContainer>
     </div>
   );
 }

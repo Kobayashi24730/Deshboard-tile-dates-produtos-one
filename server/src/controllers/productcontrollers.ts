@@ -1,6 +1,8 @@
 import { db } from "../database";
-import { produtos } from "../database/schema";
+import { produtos, administracao, clients } from "../database/schema";
 import { Request, Response } from "express";
+import bcrypt from "bcrypt";
+import { eq, sql } from "drizzle-orm";
 
 export const getProdutos = async (req: Request, res: Response) => {
   try {
@@ -85,3 +87,237 @@ export const addProdutos = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const editarProduto = async (req: Request, res: Response) => {
+  try {
+    const { id, sku, nome, preco, quantity } = req.body;
+    if (id == null || sku == null) {
+      return res.status(400).json({
+        error: "Parametros IS e SKU necessarios para edicao!!"
+      });
+    }
+
+    const edicao = await db.execute(sql`
+      UPDATE produtos 
+      SET nome = ${nome},
+        preco = ${preco},
+        quantity = ${quantity}
+      WHERE id = ${id}
+    `);
+
+    return res.status(200).json({
+      sucesso: true,
+      mensagem: "Produto editado com sucesso!!",
+      data: edicao
+    });
+  } catch (err: any) {
+    console.log("Erro ao editar produto: ", err)
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Erro ao editar produtos."
+      data: err.message
+    });
+  }
+};
+
+export const excluirProduto = async (req: Request, res: Response) => {
+  try {
+    const { id, sku } = req.body;
+
+    if (id == null || sku == null) {
+      return res.status(400).json({
+        error: "Parametros ID ou SKU sao necessarios!!"
+      });
+    }
+    const del = await db.delete(produtos).where(eq(produtos.id, Number(id)));
+
+    return res.status(200).json({
+      sucesso: true,
+      mensagem: "Produto deletado com sucesso!!",
+      data: del
+    });
+  } catch (err: any) {
+    console.log("Erro ao deletar produto: ", err);
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Erro ao deletar produto!!",
+      data: err.message
+    });
+  }
+};
+
+export const editarClient = async (req: Request, res: Response) => {
+  try {
+    const { id, nome, email, senha } = req.body;
+
+    if (id == null || nome == null || email == null || senha == null) {
+      return res.status(400).josn({
+        error: "Parametros ID,Nome,Email,senha sao obrigatórios!!"
+      });
+    }
+    const hash = await bcrypt.hash(senha, 10);
+
+    const edicao = await db.execute(sql`
+      UPDATE clients
+      SET nome = ${nome},
+        email = ${email},
+        senha = ${hash}
+      WHERE id = ${id}
+    `);
+
+    return res.status(200).json({
+      sucesso: true,
+      mensagem: "Client editado com sucesso!!",
+      data: edicao
+    });
+  } catch (err: any) {
+    console.log("Erro ao editar as informacoes do client:", err)
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Erro ao editar as informacoes do client",
+      data: err.message
+    });
+  }
+};
+
+export const excluirClient = async (req: Request, res: Response) => {
+  try {
+
+    const { nome, email } = req.body;
+
+    if (nome == null || email == null) {
+      return res.status(400).json({
+        error: "Erro ao excluir client"
+      });
+    }
+
+    const del = await db.delete(clients).where(eq(clients.nome, clients.email);
+
+    return res.status.json({
+      sucesso: true,
+      mensagem: "Client excluido com sucesso",
+      data: del
+    });
+  } catch (err: any) {
+    console.log("Erro ao deletar client:", err)
+    return res.status.json({
+      sucesso: false,
+      mensagem: "Erro ao deletar client",
+      data: err.message
+    });
+  }
+};
+
+export const TopVendidos = async (req: Request, res: Response) => {
+  try {
+    const all = await db.execute(sql`
+      SELECT nome, SUM(vendas) AS total_vendas
+      FROM produtos 
+      GROUP BY id, nome
+      ORDER BY total_vendas DESC LIMIT 5
+    `);
+
+    return res.status(200).json({
+      sucesso: true,
+      mensagem: "Top Produtos encontrados com sucesso!",
+      dado: all.rows
+    });
+
+  } catch (err: any) {
+    console.log("Erro ao coletar Top produtos:", err);
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Top Produtos nao encontrados.",
+      dado: err.message,
+    });
+  }
+};
+
+export const getClients = async (req: Request, res: Response) => {
+  try {
+    const dados = await db.select().from(clients);
+
+    const ClientsFormatados = dados.map((client) => {
+      return {
+        id: client.id,
+        nome: client.nome,
+        email: client.email,
+        cargo: client.cargo
+      };
+    });
+
+    res.json({
+      "clients": ClientsFormatados
+    });
+  } catch (err: any) {
+    console.log("Erro ao coletar data clients: ", err);
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Erro ao coletar data clinets",
+      data: err.message
+    });
+  }
+};
+
+export const AddClients = async (req: Request, res: Response) => {
+  try {
+    const { nome, senha, email, cargo } = req.body;
+
+    if (nome == null || senha == null || email == null) {
+      res.status(400).json({
+        error: "Erro parametros Nome,Email,senha sao obrigatórios!",
+      })
+    }
+
+    const hash = await bcrypt.hash(senha, 10);
+
+    const emailExits = await db.select().from(clients).where(eq(clients.email, email));
+    if (emailExits.length > 0) {
+      return res.status(400).json({
+        error: "Erro Email ja cadastrado",
+      })
+    }
+
+    const all = await db.insert(clients).values({
+      nome,
+      senha: hash,
+      email,
+      cargo
+    }).returning();
+
+    return res.status(200).json({
+      sucesso: true,
+      mensagem: "Usuarios criado com sucesso!",
+      dado: all[0],
+    })
+  } catch (err: any) {
+    console.log("Erro ao coletar as informacoes dos usuarios: ", err);
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Usuarios nao criado.",
+      dado: err.message,
+    });
+  }
+};
+
+export const getAtualizacoes = async (req: Request, res: Response) => {
+  try {
+    const data = await db.select().from(administracao);
+    const AtualizacoesFormatadas = data.map((Atu) => {
+      return {
+        id: Atu.id,
+        atualizacao: Atu.atualizacao
+      };
+    });
+
+    res.json({
+      "Atualizacoes": AtualizacoesFormatadas
+    });
+  } catch (err: any) {
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Nao foi possivel pegar as atualizacoes",
+      data: err.message
+    });
+  }
+}

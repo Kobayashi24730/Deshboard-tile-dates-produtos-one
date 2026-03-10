@@ -1,15 +1,21 @@
-.conteudo{
-  margin-left:250px;
-  padding:30px;
-  min-height:100vh;
-  background:#f5f6fa;
+/* layout geral */
+
+.app {
+  display: flex;
 }
 
-@media(max-width:700px){
+.conteudo {
+  margin-left: 250px;
+  padding: 20px;
+  width: 100%;
+}
 
-  .conteudo{
-    margin-left:70px;
-    padding:20px;
+/* mobile */
+
+@media (max-width:1024px) {
+
+  .conteudo {
+    margin-left: 0;
   }
 
 }

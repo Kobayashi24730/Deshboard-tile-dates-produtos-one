@@ -67,6 +67,7 @@ export default function TabellaAllPages() {
         <p>quantity</p>
         <p>preco</p>
         <p>vendas</p>
+        <p>status</p>
       </div>
       <div className="div_lista_produtos">
         {error && <p className="error_p">Erro ao carregar data{error}</p>}
