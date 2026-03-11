@@ -1,7 +1,7 @@
 import { db } from "../database";
 import { produtos, administracao, clients } from "../database/schema";
 import { Request, Response } from "express";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { eq, sql } from "drizzle-orm";
 
 export const getProdutos = async (req: Request, res: Response) => {
@@ -151,7 +151,7 @@ export const editarClient = async (req: Request, res: Response) => {
     const { id, nome, email, senha } = req.body;
 
     if (id == null || nome == null || email == null || senha == null) {
-      return res.status(400).josn({
+      return res.status(400).json({
         error: "Parametros ID,Nome,Email,senha sao obrigatórios!!"
       });
     }
@@ -193,14 +193,14 @@ export const excluirClient = async (req: Request, res: Response) => {
 
     const del = await db.delete(clients).where(eq(clients.nome, clients.email));
 
-    return res.status.json({
+    return res.status(200).json({
       sucesso: true,
       mensagem: "Client excluido com sucesso",
       data: del
     });
   } catch (err: any) {
     console.log("Erro ao deletar client:", err)
-    return res.status.json({
+    return res.status(500).json({
       sucesso: false,
       mensagem: "Erro ao deletar client",
       data: err.message
@@ -246,7 +246,7 @@ export const getClients = async (req: Request, res: Response) => {
       };
     });
 
-    res.json({
+    return res.json({
       "clients": ClientsFormatados
     });
   } catch (err: any) {
