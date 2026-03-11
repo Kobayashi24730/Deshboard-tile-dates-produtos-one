@@ -14,7 +14,7 @@ router.get("/produtos", getProdutos);
 router.post("/addprodutos", addProdutos);
 router.get("/topvendidos", TopVendidos);
 router.post("/addclient", AddClients);
-router.post("/getclient", getClients);
+router.get("/getclient", getClients);
 router.get("/getatualizacoes", getAtualizacoes);
 
 export default router;
