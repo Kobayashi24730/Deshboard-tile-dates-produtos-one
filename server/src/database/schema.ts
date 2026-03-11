@@ -12,7 +12,8 @@ export const produtos = pgTable("produtos", {
   preco: integer("preco").notNull(),
   vendas: integer("vendas").notNull(),
   demanda: integer("demanda").notNull(),
-  vendas_ano_anterior: integer("vendas_ano_anterior").notNull()
+  vendas_ano_anterior: integer("vendas_ano_anterior").notNull(),
+  tentativas_compras: integer("tentativas_compras").notNull()
 });
 
 export const clients = pgTable("clients", {

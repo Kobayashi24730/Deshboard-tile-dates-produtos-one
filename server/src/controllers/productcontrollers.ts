@@ -4,6 +4,7 @@ import { Request, Response } from "express";
 import bcrypt from "bcryptjs";
 import { eq, sql } from "drizzle-orm";
 
+
 export const getProdutos = async (req: Request, res: Response) => {
   try {
     const data = await db.select().from(produtos);
@@ -191,7 +192,7 @@ export const excluirClient = async (req: Request, res: Response) => {
       });
     }
 
-    const del = await db.delete(clients).where(eq(clients.nome, clients.email));
+    const del = await db.delete(clients).where(eq(clients.email, email));
 
     return res.status(200).json({
       sucesso: true,
@@ -211,10 +212,9 @@ export const excluirClient = async (req: Request, res: Response) => {
 export const TopVendidos = async (req: Request, res: Response) => {
   try {
     const all = await db.execute(sql`
-      SELECT nome, SUM(vendas) AS total_vendas
+      SELECT id,nome, vendas AS total_vendas
       FROM produtos 
-      GROUP BY id, nome
-      ORDER BY total_vendas DESC LIMIT 5
+      ORDER BY vendas DESC LIMIT 5
     `);
 
     return res.status(200).json({
@@ -232,6 +232,71 @@ export const TopVendidos = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const AllVendas = async (req: Request, res: Response) => {
+  try {
+    const result = await db.execute(sql`SELECT SUM(vendas) AS total_vendas FROM produtos`);
+    const total = Number(result.rows[0].total_vendas ?? 0);
+
+    return res.status(200).json({
+      sucesso: true,
+      mensagem: "Data coletada com sucesso!!",
+      data: total
+    });
+  } catch (err: any) {
+    console.log("Erro ao coletar data da api: ", err);
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Erro ao coletar data!!",
+      data: err.message
+    });
+  }
+}
+
+export const taxa_secesso = async (req: Request, res: Response) => {
+  try {
+    const result = await db.execute(sql` SELECT SUM(vendas) as vendas,SUM(tentativas_compras) as tentativas FROM produtos `);
+
+    const vendas = Number(result.rows[0].vendas);
+    const tentativas = Number(result.rows[0].tentativas);
+    const taxa = tentativas === 0 ? 0 : (vendas / tentativas) * 100;
+
+    return res.status(200).json({
+      sucesso: true,
+      mensagem: "Taxa retornados com sucesso!!",
+      dado: taxa.toFixed(2)
+    });
+  } catch (err: any) {
+    console.log("Erro ao coletar dados: ", err);
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Erro ao coletar dados!!",
+      dado: err.message
+    });
+  }
+}
+
+export const vendas_vs_vendas_ano_anterior = async (req: Request, res: Response) => {
+  try {
+    const result = await db.execute(sql`SELECT SUM(vendas) as vendas,SUM (vendas_ano_anterior) AS vendas_ano_anterior FROM produtos`);
+    const vendas = Number(result.rows[0].vendas);
+    const passado = Number(result.rows[0].vendas_ano_anterior);
+    const crecimento = passado === 0 ? 0 : ((vendas - passado) / passado) * 100;
+
+    return res.status(200).json({
+      sucesso: true,
+      mensagem: "Data coletada com sucesso!!",
+      data: crecimento
+    });
+  } catch (err: any) {
+    console.log("Erro ao coletar data: ", err);
+    return res.status(500).json({
+      sucesso: false,
+      mensagem: "Erro ao coletar dados da api!!",
+      data: err.message
+    });
+  }
+}
 
 export const getClients = async (req: Request, res: Response) => {
   try {

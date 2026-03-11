@@ -1,7 +1,6 @@
-import { useEffect, useState } from "react";
-import Graficos from "../components/graficos";
 import "../styles/HomeStyles.css";
 import { useProdutos } from "../hooks/usefetch";
+import { Produtos } from "../services/servicesProdutos";
 
 import {
   MdInventory2,
@@ -13,13 +12,14 @@ import {
   MdHourglassEmpty
 } from "react-icons/md";
 
-
 export default function Home() {
 
-  const { data, isLoading, error } = useProdutos();
+  const { data = [], isLoading, error } = useProdutos();
 
   return (
     <div className="dashboard-container">
+
+      {/* CARDS */}
       <div className="cards-dashboard">
 
         <div className="card">
@@ -46,51 +46,48 @@ export default function Home() {
             140 vendidos <small>92%</small>
           </p>
         </div>
+
       </div>
 
+
+      {/* ATUALIZAÇÕES */}
       <div className="updates">
+
         <h2>
           <MdArticle size={22} /> Atualizações
         </h2>
+
         <p>
           Novos produtos adicionados ao sistema.
           <small> Data: 14/01/2900</small>
         </p>
+
         <p>
           arroz adicionado com sucesso.
           <small> Data: 12/02/1909</small>
         </p>
-        <p>
-          preco arroz modificado com sucesso
-          <small> 12/02/1019</small>
-        </p>
-        <p>
-          preco presunto modificado com sucesso
-          <small> 12/02/1019</small>
-        </p>
-        <p>
-          preco notebook modificado com sucesso
-          <small> 12/02/1019</small>
-        </p>
-        <p>
-          preco blusa gola polo adicionada com sucesso
-          <small> 12/02/1019</small>
-        </p>
+
       </div>
 
-      <Graficos />
 
+      {/* LOADING */}
       {isLoading && (
         <p>
           <MdHourglassEmpty /> Carregando produtos...
         </p>
       )}
+
+
+      {/* ERRO */}
       {error && (
         <p style={{ color: "red" }}>
           ❌ {(error as Error).message}
         </p>
       )}
-      {!isLoading && !error && data && data.length === 0 && (
+
+
+      {/* SEM PRODUTOS */}
+      {!isLoading && !error && data.length === 0 && (
         <p>
           <MdInbox /> Nenhum produto cadastrado.
         </p>
@@ -98,8 +95,7 @@ export default function Home() {
 
 
       {/* TABELA */}
-
-      {!isLoading && !error && data && data.length > 0 && (
+      {!isLoading && !error && data.length > 0 && (
 
         <div className="tabela-produtos">
 
@@ -110,72 +106,47 @@ export default function Home() {
           <table className="produtos-table">
 
             <thead>
-
               <tr>
-
                 <th>ID</th>
-
                 <th>Produto</th>
-
                 <th>Preço</th>
-
                 <th>Status</th>
-
               </tr>
-
             </thead>
 
             <tbody>
 
-              {data?.map((produto) => (
+              {data.map((produto: Produtos) => (
 
                 <tr key={produto.id}>
 
                   <td className="produto-id">
-
                     {produto.id}
-
                   </td>
-
 
                   <td className="produto-info">
 
                     <div className="produto-nome">
-
                       <MdInventory2 size={18} />
-
                       {produto.nome}
-
                     </div>
 
                     <span className="produto-sku">
-
-                      SKU: {produto.id + 2000}
-
+                      SKU: {produto.sku}
                     </span>
 
                   </td>
-
 
                   <td className="produto-preco">
-
                     <MdAttachMoney />
-
                     R$ {produto.preco}
-
                   </td>
 
-
                   <td>
-
                     <span className="status ativo">
-
                       <MdCheckCircle size={16} />
-
                       Em estoque
-
                     </span>
-
                   </td>
 
                 </tr>
@@ -191,7 +162,5 @@ export default function Home() {
       )}
 
     </div>
-
   );
-
 }

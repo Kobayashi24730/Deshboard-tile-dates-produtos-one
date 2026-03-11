@@ -5,20 +5,26 @@ export interface Produtos {
   nome: string;
   preco: number;
   category: string;
+  vendas: number;
+  demanda: number;
+  quantity: number;
+  sku: number;
 }
 
 export async function getProdutos(): Promise<Produtos[]> {
-  const response = await fetch(`{API_URL}/produtos`);
+  const response = await fetch(`${API_URL}/produtos`);
 
   if (!response.ok) {
     throw new Error("Erro ao buscar data produtos!!");
   }
 
-  return response.json();
+  const data = await response.json();
+
+  return data?.produtos ?? [];
 }
 
 export async function addProdutos(produto: Omit<Produtos, "id">) {
-  const response = await fetch(`{API_URL}/addprodutos`, {
+  const response = await fetch(`${API_URL}/addprodutos`, {
     method: "POST",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify(produto)
@@ -32,7 +38,7 @@ export async function addProdutos(produto: Omit<Produtos, "id">) {
 }
 
 export async function delProdutos(id: number) {
-  const response = await fetch(`{ API_URL }/delprodutos${id}`, {
+  const response = await fetch(`${API_URL}/delprodutos/${id}`, {
     method: "DELETE"
   });
 

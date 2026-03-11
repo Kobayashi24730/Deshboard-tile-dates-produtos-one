@@ -21,7 +21,7 @@ export default function Graficos() {
           throw new Error("Erro ao busca data na API!!");
         }
 
-        const result: { produtos: any[] } = await response.json();
+        const result = await response.json();
         const DadosFormatadosLine = result.produtos.map((produto) => ({
           nome: produto.nome,
           value: produto.preco
@@ -33,7 +33,7 @@ export default function Graficos() {
         const DadosFormatadosBar = result.produtos.map((produto) => ({
           nome: produto.nome,
           vendas: produto.vendas
-        }))
+        }));
         setDataLine(DadosFormatadosLine);
         setDataCategory(DadosFormatadosCategory);
         setDataBar(DadosFormatadosBar);

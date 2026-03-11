@@ -1,9 +1,11 @@
-import { useQuery } from "@tanstack/react-query"
-import { getProdutos } from "../services/servicesProdutos";
+import { useQuery } from "@tanstack/react-query";
+import { getProdutos, Produtos } from "../services/servicesProdutos";
 
 export function useProdutos() {
-  return useQuery({
+  return useQuery<Produtos[]>({
     queryKey: ["produtos"],
-    queryFn: getProdutos
+    queryFn: getProdutos,
+    retry: 2,
+    staleTime: 1000 * 60 * 5
   });
 }
