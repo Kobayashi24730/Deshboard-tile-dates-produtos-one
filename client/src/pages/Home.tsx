@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Graficos from "../components/graficos";
 import "../styles/HomeStyles.css";
+import { useProdutos } from "../hooks/usefetch";
 
 import {
   MdInventory2,
@@ -12,44 +13,10 @@ import {
   MdHourglassEmpty
 } from "react-icons/md";
 
-interface Produto {
-  id: number;
-  nome: string;
-  preco: number;
-}
 
 export default function Home() {
-  const [produtos, setProdutos] = useState<Produto[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [erro, setErro] = useState<string | null>(null);
 
-  useEffect(() => {
-    async function carregarProdutos() {
-      try {
-        const response = await fetch(
-          "https://deshboard-tile-dates-produtos-one.onrender.com/api/produtos"
-        );
-
-        if (!response.ok) {
-          throw new Error("Erro ao buscar produtos");
-        }
-
-        const data = await response.json();
-
-        setProdutos(data.produtos);
-
-      } catch (err) {
-        console.error(err);
-        setErro("Não foi possível carregar os produtos.");
-      } finally {
-        setLoading(false);
-      }
-
-    }
-
-    carregarProdutos();
-
-  }, []);
+  const { data, isLoading, error } = useProdutos();
 
   return (
     <div className="dashboard-container">
@@ -113,17 +80,17 @@ export default function Home() {
 
       <Graficos />
 
-      {loading && (
+      {isLoading && (
         <p>
           <MdHourglassEmpty /> Carregando produtos...
         </p>
       )}
-      {erro && (
+      {error && (
         <p style={{ color: "red" }}>
-          ❌ {erro}
+          ❌ {(error as Error).message}
         </p>
       )}
-      {!loading && !erro && produtos.length === 0 && (
+      {!isLoading && !error && data && data.length === 0 && (
         <p>
           <MdInbox /> Nenhum produto cadastrado.
         </p>
@@ -132,7 +99,7 @@ export default function Home() {
 
       {/* TABELA */}
 
-      {!loading && !erro && produtos.length > 0 && (
+      {!isLoading && !error && data && data.length > 0 && (
 
         <div className="tabela-produtos">
 
@@ -160,7 +127,7 @@ export default function Home() {
 
             <tbody>
 
-              {produtos.map((produto) => (
+              {data?.map((produto) => (
 
                 <tr key={produto.id}>
 
