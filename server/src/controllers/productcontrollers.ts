@@ -253,7 +253,7 @@ export const AllVendas = async (req: Request, res: Response) => {
   }
 }
 
-export const taxa_secesso = async (req: Request, res: Response) => {
+export const taxa_sucesso = async (req: Request, res: Response) => {
   try {
     const result = await db.execute(sql` SELECT SUM(vendas) as vendas,SUM(tentativas_compras) as tentativas FROM produtos `);
 
