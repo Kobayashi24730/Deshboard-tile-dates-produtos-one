@@ -52,7 +52,8 @@ export const addProdutos = async (req: Request, res: Response) => {
       preco,
       vendas,
       demanda,
-      vendas_ano_anterior
+      vendas_ano_anterior,
+      tentativas_compra
     } = req.body;
 
     if (nome == null || preco == null || vendas == null || demanda == null || vendas_ano_anterior == null) {
@@ -71,7 +72,8 @@ export const addProdutos = async (req: Request, res: Response) => {
         preco,
         vendas,
         demanda,
-        vendas_ano_anterior
+        vendas_ano_anterior,
+        tentativas_compra
       })
       .returning();
     return res.status(201).json({
@@ -255,7 +257,7 @@ export const AllVendas = async (req: Request, res: Response) => {
 
 export const taxa_sucesso = async (req: Request, res: Response) => {
   try {
-    const result = await db.execute(sql` SELECT SUM(vendas) as vendas,SUM(tentativas_compras) as tentativas FROM produtos `);
+    const result = await db.execute(sql` SELECT SUM(vendas) as vendas,SUM(tentativas_compra) as tentativas FROM produtos `);
 
     const vendas = Number(result.rows[0].vendas);
     const tentativas = Number(result.rows[0].tentativas);
