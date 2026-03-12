@@ -9,6 +9,29 @@ export interface Produtos {
   demanda: number;
   quantity: number;
   sku: number;
+
+  comparacao_atual: {
+    ano_anterior: number;
+    variacao_percentual: number;
+  };
+}
+
+export interface ProdutosTop {
+  id: number;
+  nome: string;
+  total_vendas: number;
+}
+
+export interface vendasTotais {
+  total_vendas: number;
+}
+
+export interface taxavalor {
+  taxa: number;
+}
+
+export interface vendas_vs_vendas_ano_anterior {
+  crecimento: number;
 }
 
 export async function getProdutos(): Promise<Produtos[]> {
@@ -47,4 +70,48 @@ export async function delProdutos(id: number) {
   }
 
   return response.json();
+}
+
+export async function TopProdutos(): Promise<ProdutosTop[]> {
+  const response = await fetch(`${API_URL}/topvendidos`);
+
+  if (!response.ok) {
+    throw new Error("Erro ao coletar TopProdutos!!");
+  }
+
+  const data = await response.json();
+  return data?.dado ?? [];
+}
+
+export async function getTotaisVendas(): Promise<vendasTotais> {
+  const response = await fetch(`${API_URL}/allvendas`);
+
+  if (!response.ok) {
+    throw new Error("Erro ao coletar data do all produtos!!");
+  }
+
+  const data = await response.json();
+  return data?.data ?? [];
+}
+
+export async function getTaxaSucesso(): Promise<taxavalor[]> {
+  const response = await fetch(`${API_URL}/taxasucesso`);
+
+  if (!response.ok) {
+    throw new Error("Erro ao coletar data da taxa!!");
+  }
+
+  const data = await response.json();
+  return data?.dado ?? [];
+}
+
+export async function getCrecimento(): Promise<vendas_vs_vendas_ano_anterior> {
+  const response = await fetch(`${API_URL}/crecimento`);
+
+  if (!response.ok) {
+    throw new Error("Erro nao coletar data do crecimento!!");
+  }
+
+  const data = await response.json();
+  return data?.data ?? [];
 }

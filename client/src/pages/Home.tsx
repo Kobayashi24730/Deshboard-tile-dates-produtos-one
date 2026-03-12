@@ -1,5 +1,8 @@
 import "../styles/HomeStyles.css";
-import { useProdutos } from "../hooks/usefetch";
+import { maisVedidos } from "../hooks/usefetchTopProdutos";
+import { totalVendas } from "../hooks/usefetchAllVendas";
+import { Taxa } from "../hooks/usefetchTaxa";
+import { creci } from "../hooks/usefetchCrecimento";
 import { Produtos } from "../services/servicesProdutos";
 
 import {
@@ -14,7 +17,10 @@ import {
 
 export default function Home() {
 
-  const { data = [], isLoading, error } = useProdutos();
+  const { data = [], isLoading, error } = maisVedidos();
+  const { data: datavendidos } = totalVendas();
+  const { data: dataTaxa } = Taxa();
+  const { data: datacreci } = creci();
 
   return (
     <div className="dashboard-container">
@@ -26,7 +32,7 @@ export default function Home() {
           <h3>
             <MdInventory2 size={20} /> Produtos Vendidos
           </h3>
-          <p>120</p>
+          <p>{datavendidos?.total_vendas ?? 0}</p>
         </div>
 
         <div className="card">
@@ -34,7 +40,7 @@ export default function Home() {
             <MdTrendingUp size={20} /> Vendas vs Ano Anterior
           </h3>
           <p>
-            14.00 <small>+14%</small>
+            {datavendidos?.total_vendas ?? 0} <small>{datacreci?.crecimento?.toFixed(2)}%</small>
           </p>
         </div>
 
@@ -43,7 +49,7 @@ export default function Home() {
             <MdCheckCircle size={20} /> Taxa de Sucesso
           </h3>
           <p>
-            140 vendidos <small>92%</small>
+            {datavendidos?.total_vendas ?? 0} <small>{dataTaxa?.taxa}%</small>
           </p>
         </div>
 
@@ -116,7 +122,7 @@ export default function Home() {
 
             <tbody>
 
-              {data.map((produto: Produtos) => (
+              {data.map((produto: ProdutosTop) => (
 
                 <tr key={produto.id}>
 
