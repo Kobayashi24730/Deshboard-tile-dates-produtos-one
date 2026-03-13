@@ -77,18 +77,18 @@ export default function TabellaAllPages() {
           const status = getStatus(produto.quantity);
 
           return (
-            <ul className="barra_produto" key={produto.id}>
-              <li>{produto.id}</li>
-              <li className="produtos_info" >
+            <div className="barra_produto" key={produto.id}>
+              <div>{produto.id}</div>
+              <div className="produtos_info" >
                 <span className="nome" >{produto.nome}</span>
                 <span className="sku" >SKU: {produto.sku}</span>
-              </li>
-              <li>{produto.category}</li>
-              <li>{produto.quantity}</li>
-              <li>RS {produto.preco}</li>
-              <li>{produto.vendas}</li>
-              <li className={`status ${status.classe}`} >{status.texto}</li>
-            </ul>
+              </div>
+              <div>{produto.category}</div>
+              <div>{produto.quantity}</div>
+              <div>RS {produto.preco}</div>
+              <div>{produto.vendas}</div>
+              <div className={`status ${status.classe}`} >{status.texto}</div>
+            </div>
           );
         })}
       </div>

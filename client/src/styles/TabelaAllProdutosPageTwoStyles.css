@@ -1,143 +1,334 @@
-/* Container geral */
-.div_tabela {
-  width: 100%;
-  max-width: 1200px;
-  margin: 2rem auto;
-  padding: 1rem;
-  font-family: 'Inter', sans-serif;
-  color: #333;
+/* =========================
+   VARIAVEIS (estilo Microsoft)
+========================= */
+
+:root{
+  --primary:#0078D4;
+  --primary-hover:#106ebe;
+  --bg:#f5f7fa;
+  --border:#e5e7eb;
+  --text:#1f2937;
+  --text-light:#6b7280;
 }
 
-/* Título e subtítulo */
-.titulo {
-  font-size: 2rem;
-  font-weight: 600;
-  margin-bottom: 0.2rem;
+
+/* =========================
+   CONTAINER
+========================= */
+
+.div_tabela{
+
+  width:100%;
+  max-width:1200px;
+
+  margin:2rem auto;
+
+  padding:1.5rem;
+
+  font-family:"Segoe UI",system-ui,sans-serif;
+
+  color:var(--text);
+
+  animation:fadeUp .4s ease;
+
 }
 
-.subtitulo {
-  font-size: 0.9rem;
-  color: #777;
-  margin-bottom: 1.5rem;
+
+/* =========================
+   TITULO
+========================= */
+
+.titulo{
+  font-size:28px;
+  font-weight:700;
 }
 
-/* Caixa de busca */
-.search_box {
-  margin-bottom: 1rem;
+.subtitulo{
+  font-size:14px;
+  color:var(--text-light);
+  margin-bottom:22px;
 }
 
-.search_box input {
-  width: 100%;
-  padding: 0.6rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color 0.2s;
+
+/* =========================
+   SEARCH
+========================= */
+
+.search_box{
+  margin-bottom:16px;
 }
 
-.search_box input:focus {
-  border-color: #007bff;
+.search_box input{
+
+  width:100%;
+
+  padding:10px 14px;
+
+  border:1px solid var(--border);
+
+  border-radius:10px;
+
+  font-size:14px;
+
+  outline:none;
+
+  background:white;
+
+  transition:.25s;
+
 }
 
-/* Informações de quantidade */
-.info_quantidade {
-  font-size: 0.85rem;
-  color: #555;
-  margin-bottom: 0.5rem;
+.search_box input:focus{
+
+  border-color:var(--primary);
+
+  box-shadow:0 0 0 2px rgba(0,120,212,0.15);
+
 }
 
-/* Cabeçalho da tabela */
-.div_topo {
-  display: grid;
-  grid-template-columns: 40px 1fr 1fr 80px 80px 80px 100px;
-  padding: 0.8rem 1rem;
-  background-color: #f5f5f5;
-  font-weight: 600;
-  border-radius: 8px 8px 0 0;
+
+/* =========================
+   INFO
+========================= */
+
+.info_quantidade{
+
+  font-size:13px;
+
+  color:var(--text-light);
+
+  margin-bottom:10px;
+
 }
 
-/* Lista de produtos */
-.div_lista_produtos {
-  display: flex;
-  flex-direction: column;
+
+/* =========================
+   CABEÇALHO
+========================= */
+
+.div_topo{
+
+  display:grid;
+
+  grid-template-columns:40px 1fr 1fr 90px 100px 90px 120px;
+
+  padding:14px 16px;
+
+  background:white;
+
+  border:1px solid var(--border);
+
+  border-radius:10px 10px 0 0;
+
+  font-size:14px;
+
+  font-weight:600;
+
 }
 
-/* Cada linha da tabela */
-.barra_produto {
-  display: grid;
-  grid-template-columns: 40px 1fr 1fr 80px 80px 80px 100px;
-  padding: 0.8rem 1rem;
-  border-bottom: 1px solid #eee;
-  align-items: center;
-  transition: background 0.2s;
+
+/* =========================
+   LISTA PRODUTOS
+========================= */
+
+.div_lista_produtos{
+
+  display:flex;
+
+  flex-direction:column;
+
+  background:white;
+
+  border:1px solid var(--border);
+
+  border-top:none;
+
+  border-radius:0 0 10px 10px;
+
+  overflow:hidden;
+
+  /* remove os pontos da lista */
+
+  list-style:none;
+  padding:0;
+  margin:0;
+
 }
 
-.barra_produto:hover {
-  background-color: #f9f9f9;
+
+/* =========================
+   LINHA PRODUTO
+========================= */
+
+.barra_produto{
+
+  display:grid;
+
+  grid-template-columns:40px 1fr 1fr 90px 100px 90px 120px;
+
+  padding:14px 16px;
+
+  border-bottom:1px solid #f1f1f1;
+
+  align-items:center;
+
+  transition:.2s;
+
 }
 
-/* Produto com nome e SKU */
-.produtos_info {
-  display: flex;
-  flex-direction: column;
+.barra_produto:last-child{
+  border-bottom:none;
 }
 
-.produtos_info .nome {
-  font-weight: 500;
+.barra_produto:hover{
+
+  background:#f5f9ff;
+
+  transform:scale(1.01);
+
 }
 
-.produtos_info .sku {
-  font-size: 0.75rem;
-  color: #888;
+
+/* =========================
+   PRODUTO INFO
+========================= */
+
+.produtos_info{
+
+  display:flex;
+  flex-direction:column;
+
 }
 
-/* Status */
-.status {
-  text-align: center;
-  padding: 0.25rem 0.5rem;
-  border-radius: 12px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  color: #fff;
+.produtos_info .nome{
+
+  font-weight:600;
+
 }
 
-.status.estoque {
-  background-color: #d1fae5;
-  /* verde claro */
-  color: #065f46;
+.produtos_info .sku{
+
+  font-size:12px;
+
+  color:var(--text-light);
+
 }
 
-.status.Baixo {
-  background-color: #fef3c7;
-  /* amarelo claro */
-  color: #92400e;
+
+/* =========================
+   PREÇO
+========================= */
+
+.preco{
+
+  font-weight:600;
+
+  color:var(--primary);
+
 }
 
-.status.esgotado {
-  background-color: #fee2e2;
-  /* vermelho claro */
-  color: #b91c1c;
+
+/* =========================
+   STATUS
+========================= */
+
+.status{
+
+  text-align:center;
+
+  padding:6px 10px;
+
+  border-radius:20px;
+
+  font-size:12px;
+
+  font-weight:600;
+
 }
 
-/* Mensagens de loading ou erro */
+.status.estoque{
+
+  background:#e6f2ff;
+
+  color:var(--primary);
+
+}
+
+.status.Baixo{
+
+  background:#fff4d6;
+
+  color:#c48a00;
+
+}
+
+.status.esgotado{
+
+  background:#ffe6e6;
+
+  color:#d93025;
+
+}
+
+
+/* =========================
+   LOADING
+========================= */
+
 .loading_p,
-.error_p {
-  text-align: center;
-  padding: 1rem 0;
-  color: #555;
+.error_p{
+
+  text-align:center;
+
+  padding:20px;
+
+  color:var(--text-light);
+
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
+
+/* =========================
+   ANIMAÇÃO
+========================= */
+
+@keyframes fadeUp{
+
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+
+  to{
+    opacity:1;
+    transform:translateY(0);
+  }
+
+}
+
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media(max-width:900px){
 
   .div_topo,
-  .barra_produto {
-    grid-template-columns: 30px 2fr 1fr 1fr 1fr 1fr;
+  .barra_produto{
+
+    grid-template-columns:40px 2fr 1fr 1fr 1fr;
+
   }
 
-  .status {
-    font-size: 0.7rem;
-    padding: 0.2rem 0.4rem;
+}
+
+
+@media(max-width:600px){
+
+  .div_topo,
+  .barra_produto{
+
+    grid-template-columns:40px 2fr 1fr 1fr;
+
   }
+
 }

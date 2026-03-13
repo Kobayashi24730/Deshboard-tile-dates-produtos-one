@@ -91,7 +91,7 @@ export async function getTotaisVendas(): Promise<vendasTotais> {
   }
 
   const data = await response.json();
-  return data?.data ?? [];
+  return { total_vendas: data.data };
 }
 
 export async function getTaxaSucesso(): Promise<taxavalor[]> {
@@ -102,7 +102,7 @@ export async function getTaxaSucesso(): Promise<taxavalor[]> {
   }
 
   const data = await response.json();
-  return data?.dado ?? [];
+  return { taxa: data.dado };
 }
 
 export async function getCrecimento(): Promise<vendas_vs_vendas_ano_anterior> {
@@ -113,5 +113,5 @@ export async function getCrecimento(): Promise<vendas_vs_vendas_ano_anterior> {
   }
 
   const data = await response.json();
-  return data?.data ?? [];
+  return { crecimento: data.data };
 }

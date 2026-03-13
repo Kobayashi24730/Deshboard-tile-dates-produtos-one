@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { taxavalor, getTaxaSucesso } from "../services/servicesProdutos";
 
-export function Taxa() {
-  return useQuery<taxavalor[]>({
+export function useTaxa() {
+  return useQuery<taxavalor>({
     queryKey: ["taxa"],
     queryFn: getTaxaSucesso,
     retry: 2,

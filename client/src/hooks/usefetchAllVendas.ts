@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { vendasTotais, getTotaisVendas } from "../services/servicesProdutos";
 
-export function totalVendas() {
-  return useQuery<vendasTotais[]>({
+export function usetotalVendas() {
+  return useQuery<vendasTotais>({
     queryKey: ["vendastotais"],
     queryFn: getTotaisVendas,
     retry: 2,

@@ -1,172 +1,264 @@
 import "../styles/HomeStyles.css";
-import { maisVedidos } from "../hooks/usefetchTopProdutos";
-import { totalVendas } from "../hooks/usefetchAllVendas";
-import { Taxa } from "../hooks/usefetchTaxa";
-import { creci } from "../hooks/usefetchCrecimento";
-import { Produtos } from "../services/servicesProdutos";
+
+import { usemaisVedidos } from "../hooks/usefetchTopProdutos";
+import { usetotalVendas } from "../hooks/usefetchAllVendas";
+import { useTaxa } from "../hooks/usefetchTaxa";
+import { usecreci } from "../hooks/usefetchCrecimento";
+
+import Graficos from "../components/graficos";
 
 import {
   MdInventory2,
   MdTrendingUp,
-  MdAttachMoney,
   MdCheckCircle,
-  MdArticle,
-  MdInbox,
-  MdHourglassEmpty
+  MdAttachMoney,
+  MdShoppingCart,
+  MdStorage,
+  MdAccessTime
 } from "react-icons/md";
+
+function saudacao() {
+  const hora = new Date().getHours();
+
+  if (hora < 12) return "Bom dia";
+  if (hora < 18) return "Boa tarde";
+  return "Boa noite";
+}
 
 export default function Home() {
 
-  const { data = [], isLoading, error } = maisVedidos();
-  const { data: datavendidos } = totalVendas();
-  const { data: dataTaxa } = Taxa();
-  const { data: datacreci } = creci();
+  const { data: produtos = [], isLoading } = usemaisVedidos();
+  const { data: totalVendas } = usetotalVendas();
+  const { data: taxa } = useTaxa();
+  const { data: crescimento } = usecreci();
 
   return (
+
     <div className="dashboard-container">
 
-      {/* CARDS */}
-      <div className="cards-dashboard">
+      {/* HEADER */}
 
-        <div className="card">
-          <h3>
-            <MdInventory2 size={20} /> Produtos Vendidos
-          </h3>
-          <p>{datavendidos?.total_vendas ?? 0}</p>
+      <header className="dashboard-header">
+
+        <div>
+
+          <h1>
+            {saudacao()}, Admin 👋
+          </h1>
+
+          <p>Resumo geral do sistema de vendas</p>
+
         </div>
 
+      </header>
+
+
+      {/* CARDS PRINCIPAIS */}
+
+      <section className="cards-dashboard">
+
         <div className="card">
+
           <h3>
-            <MdTrendingUp size={20} /> Vendas vs Ano Anterior
+            <MdShoppingCart /> Total de vendas
           </h3>
+
           <p>
-            {datavendidos?.total_vendas ?? 0} <small>{datacreci?.crecimento?.toFixed(2)}%</small>
+            {totalVendas?.total_vendas ?? 0}
           </p>
+
         </div>
+
 
         <div className="card">
+
           <h3>
-            <MdCheckCircle size={20} /> Taxa de Sucesso
+            <MdTrendingUp /> Crescimento
           </h3>
+
           <p>
-            {datavendidos?.total_vendas ?? 0} <small>{dataTaxa?.taxa}%</small>
+            {crescimento?.crecimento?.toFixed(2) ?? 0}%
           </p>
+
         </div>
 
-      </div>
+
+        <div className="card">
+
+          <h3>
+            <MdCheckCircle /> Taxa de sucesso
+          </h3>
+
+          <p>
+            {taxa?.taxa ?? 0}%
+          </p>
+
+        </div>
 
 
-      {/* ATUALIZAÇÕES */}
-      <div className="updates">
+        <div className="card">
 
-        <h2>
-          <MdArticle size={22} /> Atualizações
-        </h2>
+          <h3>
+            <MdInventory2 /> Produtos cadastrados
+          </h3>
 
-        <p>
-          Novos produtos adicionados ao sistema.
-          <small> Data: 14/01/2900</small>
-        </p>
+          <p>
+            {produtos.length}
+          </p>
 
-        <p>
-          arroz adicionado com sucesso.
-          <small> Data: 12/02/1909</small>
-        </p>
+        </div>
 
-      </div>
+      </section>
 
 
-      {/* LOADING */}
-      {isLoading && (
-        <p>
-          <MdHourglassEmpty /> Carregando produtos...
-        </p>
-      )}
+      {/* GRAFICOS */}
+
+      <section className="graficos-section">
+
+        <Graficos />
+
+      </section>
 
 
-      {/* ERRO */}
-      {error && (
-        <p style={{ color: "red" }}>
-          ❌ {(error as Error).message}
-        </p>
-      )}
+      {/* CARDS SECUNDARIOS */}
+
+      <section className="cards-secundarios">
+
+        <div className="mini-card">
+
+          <MdAttachMoney size={24} />
+
+          <div>
+
+            <h4>Faturamento estimado</h4>
+
+            <p>R$ 12.430</p>
+
+          </div>
+
+        </div>
 
 
-      {/* SEM PRODUTOS */}
-      {!isLoading && !error && data.length === 0 && (
-        <p>
-          <MdInbox /> Nenhum produto cadastrado.
-        </p>
-      )}
+        <div className="mini-card">
+
+          <MdStorage size={24} />
+
+          <div>
+
+            <h4>Produtos em estoque</h4>
+
+            <p>210</p>
+
+          </div>
+
+        </div>
+
+
+        <div className="mini-card">
+
+          <MdAccessTime size={24} />
+
+          <div>
+
+            <h4>Pedidos hoje</h4>
+
+            <p>23</p>
+
+          </div>
+
+        </div>
+
+      </section>
 
 
       {/* TABELA */}
-      {!isLoading && !error && data.length > 0 && (
 
-        <div className="tabela-produtos">
+      <section className="tabela-produtos">
 
-          <h2>
-            <MdInventory2 size={22} /> Últimos produtos adicionados
-          </h2>
+        <h2>Top Produtos Vendidos</h2>
+
+        {isLoading ? (
+
+          <p>Carregando produtos...</p>
+
+        ) : (
 
           <table className="produtos-table">
 
             <thead>
+
               <tr>
+
                 <th>ID</th>
                 <th>Produto</th>
-                <th>Preço</th>
+                <th>Vendas</th>
                 <th>Status</th>
+
               </tr>
+
             </thead>
 
             <tbody>
 
-              {data.map((produto: ProdutosTop) => (
+              {produtos.map((produto: any) => {
 
-                <tr key={produto.id}>
+                const status =
+                  produto.total_vendas > 200
+                    ? "Popular"
+                    : produto.total_vendas > 50
+                      ? "Médio"
+                      : "Baixo";
 
-                  <td className="produto-id">
-                    {produto.id}
-                  </td>
+                return (
 
-                  <td className="produto-info">
+                  <tr key={produto.id}>
 
-                    <div className="produto-nome">
-                      <MdInventory2 size={18} />
-                      {produto.nome}
-                    </div>
+                    <td>{produto.id}</td>
 
-                    <span className="produto-sku">
-                      SKU: {produto.sku}
-                    </span>
+                    <td>{produto.nome}</td>
 
-                  </td>
+                    <td>{produto.total_vendas}</td>
 
-                  <td className="produto-preco">
-                    <MdAttachMoney />
-                    R$ {produto.preco}
-                  </td>
+                    <td>
 
-                  <td>
-                    <span className="status ativo">
-                      <MdCheckCircle size={16} />
-                      Em estoque
-                    </span>
-                  </td>
+                      <span className={`status ${status.toLowerCase()}`}>
+                        {status}
+                      </span>
 
-                </tr>
+                    </td>
 
-              ))}
+                  </tr>
+
+                );
+
+              })}
 
             </tbody>
 
           </table>
 
-        </div>
+        )}
 
-      )}
+      </section>
+
+
+      {/* ATIVIDADE */}
+
+      <section className="atividade">
+
+        <h2>Atividade recente</h2>
+
+        <ul>
+
+          <li>Produto arroz vendido</li>
+          <li>Produto açúcar cadastrado</li>
+          <li>Produto café atualizado</li>
+
+        </ul>
+
+      </section>
 
     </div>
+
   );
 }

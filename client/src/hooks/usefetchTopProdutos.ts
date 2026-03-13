@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { TopProdutos } from "../services/servicesProdutos"
 
-export function maisVedidos() {
+export function usemaisVedidos() {
   return useQuery({
     queryKey: ["TopVendidos"],
     queryFn: TopProdutos,

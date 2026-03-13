@@ -1,0 +1,569 @@
+/* =========================
+   RESET
+========================= */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+
+/* =========================
+   CONTAINER
+========================= */
+
+.admin-container {
+
+  min-height: 100vh;
+  padding: 40px;
+  background: #f4f7fb;
+
+  animation: fadePage .6s ease;
+
+}
+
+@keyframes fadePage {
+
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.admin-header {
+
+  margin-bottom: 35px;
+
+}
+
+.admin-header h1 {
+
+  font-size: 30px;
+  font-weight: 600;
+  color: #1b1b1b;
+
+}
+
+
+/* animação titulo */
+
+.titulo-animado {
+
+  animation: tituloAnim .4s ease;
+
+}
+
+@keyframes tituloAnim {
+
+  from {
+
+    opacity: 0;
+    transform: translateY(-10px);
+    filter: blur(4px);
+
+  }
+
+  to {
+
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+
+  }
+
+}
+
+
+/* ações */
+
+.admin-actions {
+
+  margin-top: 10px;
+  display: flex;
+  gap: 20px;
+  color: #666;
+  font-size: 14px;
+
+}
+
+
+/* =========================
+   MENU
+========================= */
+
+.admin-menu {
+
+  display: flex;
+  gap: 12px;
+  margin-bottom: 25px;
+
+}
+
+.admin-menu button {
+
+  padding: 10px 18px;
+  border: none;
+  background: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+
+  transition: all .2s;
+
+}
+
+.admin-menu button:hover {
+
+  transform: translateY(-2px);
+
+}
+
+.admin-menu .active {
+
+  background: #0078d4;
+  color: white;
+
+}
+
+
+/* =========================
+   BUSCA
+========================= */
+
+.admin-search {
+
+  margin-bottom: 20px;
+
+}
+
+.admin-search input {
+
+  padding: 10px 14px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  outline: none;
+  width: 260px;
+
+  transition: .2s;
+
+}
+
+.admin-search input:focus {
+
+  border-color: #0078d4;
+  box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.15);
+
+}
+
+
+/* =========================
+   TABELA
+========================= */
+
+.admin-table {
+
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+
+  animation: tableAnim .4s ease;
+
+}
+
+@keyframes tableAnim {
+
+  from {
+
+    opacity: 0;
+    transform: translateY(10px);
+
+  }
+
+  to {
+
+    opacity: 1;
+    transform: translateY(0);
+
+  }
+
+}
+
+
+/* estrutura tabela */
+
+table {
+
+  width: 100%;
+  border-collapse: collapse;
+
+}
+
+thead {
+
+  background: #f1f4f8;
+
+}
+
+th {
+
+  padding: 14px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+
+}
+
+td {
+
+  padding: 14px;
+  border-top: 1px solid #eee;
+  font-size: 14px;
+
+}
+
+
+/* hover linha */
+
+tbody tr {
+
+  transition: .2s;
+
+}
+
+tbody tr:hover {
+
+  background: #f7faff;
+
+  transform: scale(1.01);
+
+}
+
+
+/* status */
+
+.status {
+
+  color: #0078d4;
+  font-weight: 600;
+
+}
+
+
+/* =========================
+   BOTÕES
+========================= */
+
+.acoes {
+
+  display: flex;
+  gap: 8px;
+
+}
+
+.btn {
+
+  border: none;
+  padding: 6px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 13px;
+
+  transition: .2s;
+
+}
+
+.btn:hover {
+
+  transform: scale(1.05);
+
+}
+
+
+/* visualizar */
+
+.visualizar {
+
+  background: #0078d4;
+  color: white;
+
+}
+
+
+/* editar */
+
+.editar {
+
+  background: #ffc107;
+
+}
+
+
+/* excluir */
+
+.excluir {
+
+  background: #e53935;
+  color: white;
+
+}
+
+
+/* fechar */
+
+.fechar {
+
+  background: #0078d4;
+  color: white;
+  margin-top: 20px;
+
+}
+
+
+/* =========================
+   PAGINAÇÃO
+========================= */
+
+.paginacao {
+
+  margin-top: 25px;
+  display: flex;
+  gap: 8px;
+
+}
+
+.pagina {
+
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  background: white;
+
+  cursor: pointer;
+
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+  transition: .2s;
+
+}
+
+.pagina:hover {
+
+  transform: translateY(-2px);
+
+}
+
+.pagina.ativa {
+
+  background: #0078d4;
+  color: white;
+
+}
+
+
+/* =========================
+   SKELETON LOADING
+========================= */
+
+.skeleton-container {
+
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+
+.skeleton-row {
+
+  height: 40px;
+
+  background: linear-gradient(90deg,
+      #eee,
+      #f5f5f5,
+      #eee);
+
+  background-size: 200% 100%;
+
+  animation: skeleton 1.4s infinite;
+
+  border-radius: 6px;
+
+}
+
+@keyframes skeleton {
+
+  0% {
+
+    background-position: 200% 0;
+
+  }
+
+  100% {
+
+    background-position: -200% 0;
+
+  }
+
+}
+
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background: rgba(0, 0, 0, 0.35);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  animation: fadeModal .2s ease;
+
+}
+
+@keyframes fadeModal {
+
+  from {
+
+    opacity: 0;
+
+  }
+
+  to {
+
+    opacity: 1;
+
+  }
+
+}
+
+
+.modal-card {
+
+  background: white;
+
+  padding: 30px;
+
+  width: 350px;
+
+  border-radius: 10px;
+
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+
+  animation: cardModal .25s ease;
+
+}
+
+.modal-card h2 {
+
+  margin-bottom: 15px;
+
+}
+
+.modal-card p {
+
+  margin-bottom: 8px;
+
+}
+
+
+/* animação card */
+
+@keyframes cardModal {
+
+  from {
+
+    transform: scale(.8);
+    opacity: 0;
+
+  }
+
+  to {
+
+    transform: scale(1);
+    opacity: 1;
+
+  }
+
+}
+
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+@media(max-width:900px) {
+
+  .admin-container {
+
+    padding: 25px;
+
+  }
+
+  .admin-menu {
+
+    flex-wrap: wrap;
+
+  }
+
+  .admin-search input {
+
+    width: 100%;
+
+  }
+
+  table {
+
+    font-size: 13px;
+
+  }
+
+}
+
+
+@media(max-width:600px) {
+
+  th,
+  td {
+
+    padding: 10px;
+
+  }
+
+  .acoes {
+
+    flex-direction: column;
+
+  }
+
+  .btn {
+
+    width: 100%;
+
+  }
+
+}

@@ -1,189 +1,398 @@
-/* CONTAINER */
+/* =========================
+   BASE
+========================= */
 
-.dashboard-container {
-  padding: 20px;
+:root {
+  --primary: #0078D4;
+  --primary-hover: #106ebe;
+  --bg: #f5f7fa;
+  --border: #e5e7eb;
+  --text: #1f2937;
+  --text-light: #6b7280;
+}
+
+body {
+  background: var(--bg);
+  font-family: "Segoe UI", system-ui, sans-serif;
 }
 
 
-/* CARDS */
+/* =========================
+   CONTAINER
+========================= */
+
+.dashboard-container {
+  padding: 24px;
+  max-width: 1400px;
+  margin: auto;
+
+  animation: fadeUp .4s ease;
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.dashboard-header p {
+  font-size: 14px;
+  color: var(--text-light);
+}
+
+
+/* =========================
+   CARDS PRINCIPAIS
+========================= */
 
 .cards-dashboard {
+
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+
   gap: 20px;
+
   margin-bottom: 30px;
+
 }
 
 .card {
+
   background: white;
-  padding: 20px;
+
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
-  transition: all .25s ease;
+
+  padding: 22px;
+
+  border: 1px solid var(--border);
+
   display: flex;
   flex-direction: column;
   gap: 10px;
-  cursor: pointer;
+
+  transition: .25s;
+
+  animation: fadeUp .45s ease;
+
 }
 
 .card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+
+  transform: translateY(-5px);
+
+  border-color: var(--primary);
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+
 }
 
 .card h3 {
+
   font-size: 15px;
+
   display: flex;
   align-items: center;
   gap: 8px;
+
   color: #444;
+
 }
 
 .card p {
-  font-size: 24px;
-  font-weight: 600;
-  color: #111;
+
+  font-size: 28px;
+
+  font-weight: 700;
+
+  color: var(--primary);
+
 }
 
 
-/* ATUALIZAÇÕES */
+/* =========================
+   GRAFICOS
+========================= */
 
-.updates {
-  background: white;
-  padding: 18px;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+.graficos-section {
+
   margin-bottom: 30px;
+
+  animation: fadeUp .5s ease;
+
 }
 
-.updates h2 {
+
+/* =========================
+   CARDS SECUNDARIOS
+========================= */
+
+.cards-secundarios {
+
+  display: grid;
+
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 20px;
+
+  margin-bottom: 30px;
+
+}
+
+.mini-card {
+
+  background: white;
+
+  border-radius: 12px;
+
+  border: 1px solid var(--border);
+
+  padding: 18px;
+
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 18px;
-  margin-bottom: 10px;
+  gap: 12px;
+
+  transition: .25s;
+
 }
 
-.updates p {
+.mini-card:hover {
+
+  transform: translateY(-4px);
+
+  border-color: var(--primary);
+
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+}
+
+.mini-card h4 {
   font-size: 14px;
-  margin-bottom: 4px;
+  color: var(--text-light);
 }
 
-.updates small {
-  display: block;
-  color: #777;
+.mini-card p {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text);
 }
 
 
-/* TABELA */
+/* =========================
+   TABELA
+========================= */
 
 .tabela-produtos {
-  margin-top: 30px;
+
   background: white;
-  padding: 20px;
+
+  padding: 22px;
+
   border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+
+  border: 1px solid var(--border);
+
+  margin-top: 20px;
+
+  animation: fadeUp .55s ease;
+
 }
 
 .tabela-produtos h2 {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 15px;
+
   font-size: 18px;
+
+  margin-bottom: 15px;
+
 }
 
 
-/* TABLE */
+/* =========================
+   TABLE
+========================= */
 
 .produtos-table {
+
   width: 100%;
+
   border-collapse: collapse;
-}
 
-
-/* HEADER */
-
-.produtos-table thead {
-  border-bottom: 1px solid #eee;
 }
 
 .produtos-table th {
+
   text-align: left;
-  padding: 14px 10px;
+
   font-size: 14px;
-  font-weight: 600;
+
+  padding: 14px;
+
+  border-bottom: 2px solid #f0f0f0;
+
   color: #555;
+
 }
 
-
-/* LINHAS */
-
 .produtos-table td {
-  padding: 16px 10px;
-  border-bottom: 1px solid #f2f2f2;
+
+  padding: 14px;
+
   font-size: 14px;
-  vertical-align: middle;
+
+  border-bottom: 1px solid #f2f2f2;
+
 }
 
 .produtos-table tbody tr {
-  transition: all .2s ease;
+
+  transition: .2s;
+
 }
 
 .produtos-table tbody tr:hover {
-  background: #f9fafb;
+
+  background: #f5f9ff;
+
 }
 
 
-/* PRODUTO */
-
-.produto-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.produto-nome {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-weight: 500;
-}
-
-.produto-sku {
-  font-size: 12px;
-  color: #888;
-}
-
-
-/* PREÇO */
-
-.produto-preco {
-  font-weight: 500;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-
-/* STATUS */
+/* =========================
+   STATUS
+========================= */
 
 .status {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  border-radius: 20px;
+
+  padding: 5px 10px;
+
+  border-radius: 8px;
+
   font-size: 13px;
+
   font-weight: 500;
+
 }
 
-.status.ativo {
-  background: #e7f7ef;
-  color: #1e8e5a;
+.status.popular {
+
+  background: #e6f2ff;
+
+  color: var(--primary);
+
+}
+
+.status.médio {
+
+  background: #fff4d6;
+
+  color: #c48a00;
+
+}
+
+.status.baixo {
+
+  background: #ffe6e6;
+
+  color: #d93025;
+
 }
 
 
-/* RESPONSIVO */
+/* =========================
+   ATIVIDADE
+========================= */
+
+.atividade {
+
+  margin-top: 30px;
+
+  background: white;
+
+  padding: 20px;
+
+  border-radius: 12px;
+
+  border: 1px solid var(--border);
+
+}
+
+.atividade h2 {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+
+.atividade ul {
+  list-style: none;
+  padding: 0;
+}
+
+.atividade li {
+
+  padding: 10px 0;
+
+  font-size: 14px;
+
+  border-bottom: 1px solid #f0f0f0;
+
+}
+
+.atividade li:last-child {
+  border-bottom: none;
+}
+
+
+/* =========================
+   ANIMAÇÃO
+========================= */
+
+@keyframes fadeUp {
+
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+}
+
+
+/* =========================
+   RESPONSIVO
+========================= */
+
+/* TABLET */
+
+@media(max-width:1024px) {
+
+  .dashboard-container {
+    padding: 20px;
+  }
+
+  .cards-dashboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+/* MOBILE */
 
 @media(max-width:768px) {
 
@@ -191,8 +400,24 @@
     grid-template-columns: 1fr;
   }
 
-  .produtos-table {
-    font-size: 13px;
+  .produtos-table th:nth-child(1),
+  .produtos-table td:nth-child(1) {
+    display: none;
+  }
+
+}
+
+
+/* MOBILE PEQUENO */
+
+@media(max-width:480px) {
+
+  .dashboard-container {
+    padding: 16px;
+  }
+
+  .card p {
+    font-size: 22px;
   }
 
 }
